@@ -1,45 +1,60 @@
+import 'package:project1/constants/colors.dart';
+import 'package:project1/model/todo.dart';
 import 'package:flutter/material.dart';
-import "../model/todo.dart";
+
+typedef OnToDoChangedType = void Function(ToDo todo);
+typedef OnDeleteItemType = void Function(String? id);
 
 class ToDoItem extends StatelessWidget {
+  final ToDo todo;
+  final OnToDoChangedType onToDoChanged;
+  final OnDeleteItemType onDeleteItem;
+
   const ToDoItem({
     Key? key,
+    required this.todo,
+    required this.onToDoChanged,
+    required this.onDeleteItem,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
-      padding: const EdgeInsets.only(top: 7, left: 10, right: 10),
-      margin: const EdgeInsets.only(bottom: 40),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-      ),
+      margin: const EdgeInsets.only(bottom: 20),
       child: ListTile(
-        onTap: () {},
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        onTap: () {
+          onToDoChanged(todo);
+        },
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         tileColor: Colors.white,
-        leading: Icon(Icons.check_box, color: Colors.purple[400]),
+        leading: Icon(
+          todo.isDone ? Icons.check_box : Icons.check_box_outline_blank,
+          color: tdBlue,
+        ),
         title: Text(
-          "Buy Coffe",
+          todo.todoText!,
           style: TextStyle(
-            fontSize: 16,
-            color: Colors.black,
-            decoration: TextDecoration.lineThrough,
-          ),
+              fontSize: 16,
+              color: tdBlack,
+              decoration: todo.isDone ? TextDecoration.lineThrough : null),
         ),
         trailing: Container(
-          height: 35,
-          width: 35,
-          decoration: BoxDecoration(
-              color: Colors.red[500], borderRadius: BorderRadius.circular(5)),
-          child: IconButton(
-            color: Colors.white,
-            iconSize: 18,
-            icon: const Icon(Icons.delete),
-            onPressed: () {},
-          ),
-        ),
+            padding: const EdgeInsets.all(0),
+            width: 35,
+            height: 35,
+            decoration: BoxDecoration(
+                color: tdRed, borderRadius: BorderRadius.circular(5)),
+            child: IconButton(
+              icon: const Icon(
+                Icons.delete,
+              ),
+              color: Colors.white,
+              iconSize: 18,
+              onPressed: () {
+                onDeleteItem(todo.id);
+              },
+            )),
       ),
     );
   }

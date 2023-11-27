@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import "../screens/home.dart";
+import "package:project1/screens/home.dart";
 
+// partner: abdallah korhani
 void main() {
-  runApp(const MyApp());
+  runApp(const MainApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MainApp extends StatelessWidget {
+  const MainApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      home: Home(),
-    );
+    return const MaterialApp(
+        debugShowCheckedModeBanner: false, title: "flutter demo", home: Home());
   }
 }
